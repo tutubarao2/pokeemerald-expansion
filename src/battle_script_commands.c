@@ -13868,6 +13868,12 @@ static void Cmd_handleballthrow(void)
                 u32 friendship = (B_FRIEND_BALL_MODIFIER >= GEN_8 ? 150 : 200);
                 SetMonData(caughtMon, MON_DATA_FRIENDSHIP, &friendship);
             }
+
+            else if (ballId == BALL_MASTER)
+            {
+                gBattleMons[gBattlerTarget].isShiny = TRUE;
+                SetMonData(caughtMon, MON_DATA_IS_SHINY, &gBattleMons[gBattlerTarget].isShiny);
+            }
         }
         else // mon may be caught, calculate shakes
         {
@@ -13935,6 +13941,11 @@ static void Cmd_handleballthrow(void)
                 {
                     u32 friendship = (B_FRIEND_BALL_MODIFIER >= GEN_8 ? 150 : 200);
                     SetMonData(caughtMon, MON_DATA_FRIENDSHIP, &friendship);
+                }
+                else if (ballId == BALL_MASTER)
+                {
+                    bool8 isShiny = TRUE;
+                    SetMonData(caughtMon, MON_DATA_IS_SHINY, &isShiny);
                 }
             }
             else // not caught
