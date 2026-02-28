@@ -84,6 +84,7 @@ gFieldEffectScriptPointers::
 	.4byte gFieldEffectScript_UseRockClimb              @ FLDEFF_USE_ROCK_CLIMB
 	.4byte gFieldEffectScript_RockClimbDust             @ FLDEFF_ROCK_CLIMB_DUST
 	.4byte gFieldEffectScript_ORASDowse                 @ FLDEFF_ORAS_DOWSE
+	.4byte gFieldEffectScript_RainDance                 @ FLDEFF_USE_RAIN_DANCE
 
 gFieldEffectScript_ExclamationMarkIcon1::
 	field_eff_callnative FldEff_ExclamationMarkIcon
@@ -398,5 +399,9 @@ gFieldEffectScript_RockClimbDust:: @ 82DBB28
 
 gFieldEffectScript_ORASDowse::
 	field_eff_callnative FldEff_ORASDowsing
+	field_eff_end
+
+gFieldEffectScript_RainDance::
+	field_eff_callnative FldEff_RainDance
 	field_eff_end
 

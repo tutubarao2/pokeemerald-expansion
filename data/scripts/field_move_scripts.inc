@@ -474,3 +474,32 @@ Text_MonUsedRockClimb:
 Text_CantRockClimb:
     .string "The cliff is steep.\n"
     .string "A Pokémon may be able to climb it.$"
+
+EventScript_UseRainDance::
+	lockall
+	msgbox Text_WantToRainDance, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_EndRainDance
+	closemessage
+	setweather WEATHER_RAIN
+	doweather
+	dofieldeffect FLDEFF_USE_RAIN_DANCE
+	waitstate
+	msgbox Text_MonUsedRainDance, MSGBOX_DEFAULT
+	goto EventScript_EndRainDance
+	end
+
+EventScript_CantRainDance::
+	msgbox Text_CantRainDance, MSGBOX_DEFAULT
+
+EventScript_EndRainDance::
+	releaseall
+	end
+
+Text_WantToRainDance:
+	.string "Would you like to use Rain Dance?$"
+
+Text_MonUsedRainDance:
+	.string "It started to rain!$"
+
+Text_CantRainDance:
+	.string "Rain Dance can't be used now."

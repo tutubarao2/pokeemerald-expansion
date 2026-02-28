@@ -408,6 +408,7 @@ extern const u8 EventScript_UseRockSmash[];
 extern const u8 EventScript_UseDig[];
 extern const u8 EventScript_UseCutGrass[];
 extern const u8 EventScript_UseDefog[];
+extern const u8 EventScript_UseRainDance[];
 
 //player pc
 extern const u8 LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC[];

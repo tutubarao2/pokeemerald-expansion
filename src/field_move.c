@@ -92,6 +92,11 @@ static bool32 IsFieldMoveUnlocked_Defog(void)
 }
 #endif
 
+static bool32 IsFieldMoveUnlocked_RainDance(void)
+{
+    return TRUE;
+}
+
 const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
 {
     [FIELD_MOVE_CUT] =
@@ -223,4 +228,11 @@ const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
         .partyMsgID = PARTY_MSG_CANT_USE_HERE,
     },
 #endif
+    [FIELD_MOVE_RAIN_DANCE] =
+    {
+        .fieldMoveFunc = SetUpFieldMove_RainDance,
+        .isUnlockedFunc = IsFieldMoveUnlocked_RainDance,
+        .moveID = MOVE_RAIN_DANCE,
+        .partyMsgID = PARTY_MSG_CANT_USE_HERE,
+    },
 };
