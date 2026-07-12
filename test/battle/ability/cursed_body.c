@@ -12,7 +12,7 @@ SINGLE_BATTLE_TEST("Cursed Body triggers 30% of the time")
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_AQUA_JET, player);
         ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-        MESSAGE("Wobbuffet's Aqua Jet was disabled by the opposing Frillish's Cursed Body!");
+        MESSAGE("Wobbuffet's Aqua Jet was disabled!");
     }
 }
 
@@ -31,7 +31,7 @@ SINGLE_BATTLE_TEST("Cursed Body cannot disable Struggle")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_STRUGGLE, player);
         NONE_OF {
             ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-            MESSAGE("Wobbuffet's Struggle was disabled by the opposing Frillish's Cursed Body!");
+            MESSAGE("Wobbuffet's Struggle was disabled!");
         }
     }
 }
@@ -48,7 +48,7 @@ SINGLE_BATTLE_TEST("Cursed Body can trigger if the attacker is behind a Substitu
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_AQUA_JET, player);
         ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-        MESSAGE("Wobbuffet's Aqua Jet was disabled by the opposing Frillish's Cursed Body!");
+        MESSAGE("Wobbuffet's Aqua Jet was disabled!");
     }
 }
 
@@ -65,7 +65,7 @@ SINGLE_BATTLE_TEST("Cursed Body cannot trigger if the target is behind a Substit
         ANIMATION(ANIM_TYPE_MOVE, MOVE_AQUA_JET, player);
         NONE_OF {
             ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-            MESSAGE("Wobbuffet's Aqua Jet was disabled by the opposing Frillish's Cursed Body!");
+            MESSAGE("Wobbuffet's Aqua Jet was disabled!");
         }
     }
 }
@@ -73,7 +73,7 @@ SINGLE_BATTLE_TEST("Cursed Body cannot trigger if the target is behind a Substit
 SINGLE_BATTLE_TEST("Cursed Body does not stop a multistrike move mid-execution")
 {
     GIVEN {
-        ASSUME(GetMoveEffect(MOVE_ROCK_BLAST) == EFFECT_MULTI_HIT);
+        ASSUME(IsMultiHitMove(MOVE_ROCK_BLAST));
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_FRILLISH) { Ability(ABILITY_CURSED_BODY); }
     } WHEN {
@@ -82,7 +82,7 @@ SINGLE_BATTLE_TEST("Cursed Body does not stop a multistrike move mid-execution")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROCK_BLAST, player);
         HP_BAR(opponent);
         ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-        MESSAGE("Wobbuffet's Rock Blast was disabled by the opposing Frillish's Cursed Body!");
+        MESSAGE("Wobbuffet's Rock Blast was disabled!");
         HP_BAR(opponent);
     }
 }
@@ -102,9 +102,10 @@ SINGLE_BATTLE_TEST("Cursed Body disables the move that called another move inste
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SLEEP_TALK, player);
         ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-        MESSAGE("Wobbuffet's Sleep Talk was disabled by the opposing Frillish's Cursed Body!");
+        MESSAGE("Wobbuffet's Sleep Talk was disabled!");
     } THEN {
-        EXPECT_EQ(gDisableStructs[B_POSITION_PLAYER_LEFT].disabledMove, MOVE_SLEEP_TALK);
+        u32 disabledMove = player->volatiles.disabledMove;
+        EXPECT_EQ(disabledMove, MOVE_SLEEP_TALK);
     }
 }
 
@@ -123,9 +124,10 @@ SINGLE_BATTLE_TEST("Cursed Body disables the base move of a status Z-Move")
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_ZMOVE_ACTIVATE, player);
         HP_BAR(opponent);
         ABILITY_POPUP(opponent, ABILITY_CURSED_BODY);
-        MESSAGE("Wobbuffet's Nature Power was disabled by the opposing Frillish's Cursed Body!");
+        MESSAGE("Wobbuffet's Nature Power was disabled!");
     } THEN {
-        EXPECT_EQ(gDisableStructs[B_POSITION_PLAYER_LEFT].disabledMove, MOVE_NATURE_POWER);
+        u32 disabledMove = player->volatiles.disabledMove;
+        EXPECT_EQ(disabledMove, MOVE_NATURE_POWER);
     }
 }
 

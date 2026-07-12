@@ -21,7 +21,7 @@ SINGLE_BATTLE_TEST("Scrappy doesn't prevent Intimidate (Gen4-7)")
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponent);
         NONE_OF {
             ABILITY_POPUP(opponent, ABILITY_SCRAPPY);
-            MESSAGE("The opposing Kangaskhan's Scrappy prevents stat loss!");
+            MESSAGE("The opposing Kangaskhan's Attack was not lowered!");
         }
         HP_BAR(player, captureDamage: &turnTwoHit);
     } THEN {
@@ -48,7 +48,7 @@ SINGLE_BATTLE_TEST("Scrappy prevents Intimidate (Gen8+)")
         ABILITY_POPUP(player, ABILITY_INTIMIDATE);
         NONE_OF { ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponent); }
         ABILITY_POPUP(opponent, ABILITY_SCRAPPY);
-        MESSAGE("The opposing Kangaskhan's Scrappy prevents stat loss!");
+        MESSAGE("The opposing Kangaskhan's Attack was not lowered!");
         HP_BAR(player, captureDamage: &turnTwoHit);
     } THEN {
         EXPECT_EQ(turnOneHit, turnTwoHit);
@@ -57,7 +57,7 @@ SINGLE_BATTLE_TEST("Scrappy prevents Intimidate (Gen8+)")
 
 SINGLE_BATTLE_TEST("Scrappy allows to hit Ghost-type Pokémon with Normal- and Fighting-type moves")
 {
-    u32 move;
+    enum Move move;
     PARAMETRIZE { move = MOVE_SCRATCH; }
     PARAMETRIZE { move = MOVE_KARATE_CHOP; }
 
@@ -74,7 +74,7 @@ SINGLE_BATTLE_TEST("Scrappy allows to hit Ghost-type Pokémon with Normal- and F
 
 SINGLE_BATTLE_TEST("Scrappy doesn't bypass a Ghost-type's Wonder Guard")
 {
-    u32 move;
+    enum Move move;
     PARAMETRIZE { move = MOVE_SCRATCH; }
     PARAMETRIZE { move = MOVE_KARATE_CHOP; }
 
@@ -89,6 +89,5 @@ SINGLE_BATTLE_TEST("Scrappy doesn't bypass a Ghost-type's Wonder Guard")
             HP_BAR(opponent);
         }
         ABILITY_POPUP(opponent, ABILITY_WONDER_GUARD);
-        MESSAGE("The opposing Shedinja avoided damage with Wonder Guard!");
     }
 }

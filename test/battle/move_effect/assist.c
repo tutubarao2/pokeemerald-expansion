@@ -35,7 +35,7 @@ SINGLE_BATTLE_TEST("Assist fails if there are no valid moves to choose from")
 
 SINGLE_BATTLE_TEST("Assisted move triggers correct weakness berry")
 {
-    u16 item;
+    enum Item item;
     PARAMETRIZE { item = ITEM_CHILAN_BERRY; }
     PARAMETRIZE { item = ITEM_PASSHO_BERRY; }
     GIVEN {
@@ -49,9 +49,9 @@ SINGLE_BATTLE_TEST("Assisted move triggers correct weakness berry")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ASSIST, player);
         MESSAGE("Wobbuffet used Surf!");
         if (item == ITEM_PASSHO_BERRY) {
-            ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_EFFECT, opponent);
+            ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_BERRY, opponent);
         } else {
-            NOT ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_EFFECT, opponent);
+            NOT ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_BERRY, opponent);
         }
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SURF, player);
     }
