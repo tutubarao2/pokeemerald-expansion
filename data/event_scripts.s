@@ -74,6 +74,7 @@
 #include "constants/vars.h"
 #include "constants/weather.h"
 #include "constants/speaker_names.h"
+#include "constants/rgb.h"
 	.include "asm/macros.inc"
 	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
@@ -1681,6 +1682,21 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	releaseall
 	end
 
+Script_SetGrayscaleTint::
+	setptr GLOBAL_FIELD_TINT_GRAYSCALE, gGlobalFieldTintMode
+	callnative InitMapView
+	return
+
+Script_SetSepiaTint::
+	setptr GLOBAL_FIELD_TINT_SEPIA, gGlobalFieldTintMode
+	callnative InitMapView
+	return
+
+Script_RemoveTint::
+	setptr GLOBAL_FIELD_TINT_NONE, gGlobalFieldTintMode
+	callnative RemoveTintFromObjectEvents
+	callnative InitMapView
+	return
 
 	.include "data/scripts/pc_transfer.inc"
 	.include "data/scripts/questionnaire.inc"
