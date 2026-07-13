@@ -202,20 +202,26 @@ Debug_EventScript_Text_DefensiveIVs:
 
 Debug_EventScript_Script_1::
 	setptr GLOBAL_FIELD_TINT_GRAYSCALE, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_WHITE
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 
 Debug_EventScript_Script_2::
 	setptr GLOBAL_FIELD_TINT_SEPIA, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_WHITE
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 
 Debug_EventScript_Script_3::
 	setptr GLOBAL_FIELD_TINT_NONE, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_BLACK
 	callnative RemoveTintFromObjectEvents
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	release
 	end
 

@@ -1684,18 +1684,24 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 Script_SetGrayscaleTint::
 	setptr GLOBAL_FIELD_TINT_GRAYSCALE, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_WHITE
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	return
 
 Script_SetSepiaTint::
 	setptr GLOBAL_FIELD_TINT_SEPIA, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_WHITE
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	return
 
 Script_RemoveTint::
 	setptr GLOBAL_FIELD_TINT_NONE, gGlobalFieldTintMode
+	fadescreenswapbuffers FADE_TO_BLACK
 	callnative RemoveTintFromObjectEvents
 	callnative InitMapView
+	fadescreenswapbuffers FADE_FROM_WHITE
 	return
 
 	.include "data/scripts/pc_transfer.inc"

@@ -601,7 +601,6 @@ void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
         objectEventTemplate->movementType = movementType;
 }
 
-// static void InitMapView(void)
 void InitMapView(void)
 {
     s32 paletteIndex;
@@ -620,7 +619,7 @@ void RemoveTintFromObjectEvents(void)
     if (gGlobalFieldTintMode == GLOBAL_FIELD_TINT_NONE)
     {
         RemoveTintFromObjectEventPalettes();
-        CB2_ReturnToField(); // novo
+        CB2_ReturnToField(); // sem isso, sprites e sombras não retornam às cores normais
     }
 }
 
