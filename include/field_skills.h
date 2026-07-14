@@ -1,0 +1,6 @@
+#ifndef GUARD_CONSTANTS_FIELD_SKILLS_H
+#define GUARD_CONSTANTS_FIELD_SKILLS_H
+
+void FieldSkillReveal(void);
+
+#endif // GUARD_CONSTANTS_FIELD_SKILLS_H

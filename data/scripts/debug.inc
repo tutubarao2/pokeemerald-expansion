@@ -200,11 +200,17 @@ Debug_EventScript_Text_OffensiveIVs:
 Debug_EventScript_Text_DefensiveIVs:
 	.string "HP IVs: {STR_VAR_1}, DEF IVs: {STR_VAR_2}, SPDEF IVs: {STR_VAR_3}$"
 
-Debug_EventScript_Script_1::
+@ script para reveal
+Debug_EventScript_Script_1:: 
+	lock
 	setptr GLOBAL_FIELD_TINT_GRAYSCALE, gGlobalFieldTintMode
 	fadescreenswapbuffers FADE_TO_WHITE
 	callnative InitMapView
+	setflag FLAG_TEMP_5 @ set se reveal em curso
+	callnative FieldSkillReveal @ spawna item
 	fadescreenswapbuffers FADE_FROM_WHITE
+	waitbuttonpress
+	goto Debug_EventScript_Script_3
 	release
 	end
 
@@ -218,10 +224,12 @@ Debug_EventScript_Script_2::
 
 Debug_EventScript_Script_3::
 	setptr GLOBAL_FIELD_TINT_NONE, gGlobalFieldTintMode
+	clearflag FLAG_TEMP_5 @ redundante?
 	fadescreenswapbuffers FADE_TO_BLACK
 	callnative RemoveTintFromObjectEvents
+	callnative FieldSkillReveal @ remove item spawnado
 	callnative InitMapView
-	fadescreenswapbuffers FADE_FROM_WHITE
+	fadescreenswapbuffers FADE_FROM_BLACK
 	release
 	end
 
