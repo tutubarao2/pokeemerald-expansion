@@ -603,11 +603,13 @@ void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
 
 void InitMapView(void)
 {
-    s32 paletteIndex;
+    //s32 paletteIndex;
 
     ResetFieldCamera();
-    for (paletteIndex = 0; paletteIndex < 15; paletteIndex++)
-        ApplyGlobalFieldPaletteTint(paletteIndex);
+
+    // caso descomentadas, aplica o filtro aos object events
+    //for (paletteIndex = 0; paletteIndex < 15; paletteIndex++)
+        //ApplyGlobalFieldPaletteTint(paletteIndex);
     CopyMapTilesetsToVram(gMapHeader.mapLayout);
     LoadMapTilesetPalettes(gMapHeader.mapLayout);
     DrawWholeMapView();
