@@ -3483,8 +3483,29 @@ const struct SpriteTemplate gIndignationBallSpriteTemplate =
     .paletteTag = ANIM_TAG_INDIGNATION_BALL,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = sAnims_Indignation_Ball,
-    //.callback = AnimEllipticalGust
     .callback = AnimParticleInVortex
+};
+
+static const union AffineAnimCmd sAffineAnim_SpinningTriangle[] =
+{
+    AFFINEANIMCMD_FRAME(0x110, 0x110, 0, 0), // escala 1.1, sem giro
+    AFFINEANIMCMD_FRAME(0xFFFE, 0xFFFE, -5, 130),
+    AFFINEANIMCMD_END,
+};
+
+const union AffineAnimCmd *const gAffineAnims_SpinningTriangle[] =
+{
+    sAffineAnim_SpinningTriangle,
+};
+
+// Triângulo do indignation
+const struct SpriteTemplate gSpinningTriangleSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_TRIANGLE,
+    .paletteTag = ANIM_TAG_TRIANGLE,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .affineAnims = gAffineAnims_SpinningTriangle,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gGrowingSuperpowerTemplate =    // Used in Breakneck Blitz

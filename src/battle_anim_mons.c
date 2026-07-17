@@ -1484,7 +1484,13 @@ void AnimSpriteOnMonPos(struct Sprite *sprite)
     else if (sprite->animEnded || sprite->affineAnimEnded)
     {
         DestroySpriteAndMatrix(sprite);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
     }
+    
+    if (gBattleAnimArgs[3] == 50)
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG1);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(6, 10));
 }
 
 // Linearly translates a sprite to a target position on the

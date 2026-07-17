@@ -426,7 +426,9 @@
 #define ANIM_TAG_TATSUGIRI_STRETCHY         (ANIM_SPRITES_START + 411)
 #define ANIM_TAG_SAFARI_BAIT                (ANIM_SPRITES_START + 412)
 #define ANIM_TAG_INDIGNATION_BALL           (ANIM_SPRITES_START + 413) // novo ataque
-#define ANIM_TAG_COUNT                      GET_TRUE_SPRITE_INDEX(ANIM_TAG_INDIGNATION_BALL + 1)
+#define ANIM_TAG_TRIANGLE                   (ANIM_SPRITES_START + 414) // novo ataque
+
+#define ANIM_TAG_COUNT                      GET_TRUE_SPRITE_INDEX(ANIM_TAG_TRIANGLE + 1)
 
 // battlers
 enum AnimBattler

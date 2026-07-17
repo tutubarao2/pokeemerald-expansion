@@ -637,6 +637,7 @@ static void AnimSlidingKick_Step(struct Sprite *sprite)
 // arg 1: initial y pixel offset
 // arg 2: anim num
 // arg 3: spin duration
+// arg 4: =1 se indignation
 void AnimSpinningKickOrPunch(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, TRUE);

@@ -26,6 +26,10 @@ const u16 gBattleAnimSpritePal_PurpleJab[] = INCGFX_U16("graphics/battle_anims/s
 const u32 gBattleAnimSpriteGfx_IndignationBall[] = INCGFX_U32("graphics/battle_anims/sprites/indignation_ball.png", ".4bpp.smol"); // novo ataque
 const u16 gBattleAnimSpritePal_IndignationBall[] = INCGFX_U16("graphics/battle_anims/sprites/indignation_ball.png", ".gbapal"); // novo ataque
 
+const u32 gBattleAnimSpriteGfx_IndignationTriangle[] = INCGFX_U32("graphics/battle_anims/sprites/Triangulo_eq.png", ".4bpp.smol"); // novo ataque
+const u16 gBattleAnimSpritePal_IndignationTriangle[] = INCGFX_U16("graphics/battle_anims/sprites/Triangulo_eq.png", ".gbapal"); // novo ataque
+
+
 const u16 gBattleAnimSpritePal_ToxicSpikes[] = INCGFX_U16("graphics/battle_anims/sprites/toxic_spikes.png", ".gbapal");
 
 const u32 gBattleAnimSpriteGfx_EnergyBall[] = INCGFX_U32("graphics/battle_anims/sprites/energy_ball.png", ".4bpp.smol");

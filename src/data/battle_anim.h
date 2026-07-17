@@ -1311,6 +1311,7 @@ const struct BattleAnimation gBattleAnimTable[ANIM_TAG_COUNT] =
     BATTLE_ANIMATION(ANIM_TAG_WHITE_STREAK, gBattleAnimSpriteGfx_WhiteStreak, 0x0200, gBattleAnimSpritePal_WhiteStreak),
     BATTLE_ANIMATION(ANIM_TAG_PURPLE_JAB, gBattleAnimSpriteGfx_PurpleJab, 0x0100, gBattleAnimSpritePal_PurpleJab),
     BATTLE_ANIMATION(ANIM_TAG_INDIGNATION_BALL, gBattleAnimSpriteGfx_IndignationBall, 0x0600, gBattleAnimSpritePal_IndignationBall), // novo ataque
+    BATTLE_ANIMATION(ANIM_TAG_TRIANGLE, gBattleAnimSpriteGfx_IndignationTriangle, 0x0200, gBattleAnimSpritePal_IndignationTriangle), // novo ataque
     //new particles
     BATTLE_ANIMATION(ANIM_TAG_TOXIC_SPIKES, gBattleAnimSpriteGfx_Spikes, 0x0080, gBattleAnimSpritePal_ToxicSpikes),
     BATTLE_ANIMATION(ANIM_TAG_ENERGY_BALL, gBattleAnimSpriteGfx_EnergyBall, 0x0200, gBattleAnimSpritePal_EnergyBall),

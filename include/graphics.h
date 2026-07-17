@@ -2725,6 +2725,8 @@ extern const u32 gBattleAnimSpriteGfx_PurpleJab[];
 extern const u16 gBattleAnimSpritePal_PurpleJab[];
 extern const u32 gBattleAnimSpriteGfx_IndignationBall[]; // novo ataque
 extern const u16 gBattleAnimSpritePal_IndignationBall[]; // novo ataque
+extern const u32 gBattleAnimSpriteGfx_IndignationTriangle[]; // novo ataque
+extern const u16 gBattleAnimSpritePal_IndignationTriangle[]; // novo ataque
 extern const u16 gBattleAnimSpritePal_ToxicSpikes[];
 extern const u32 gBattleAnimSpriteGfx_EnergyBall[];
 extern const u16 gBattleAnimSpritePal_EnergyBall[];

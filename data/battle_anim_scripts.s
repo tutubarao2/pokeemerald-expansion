@@ -17075,27 +17075,46 @@ gBattleAnimMove_MalignantChain::
 	end
 
 @ novo ataque
-@ por enquanto usa animação do hurricane
 gBattleAnimMove_Indignation::
-	monbg ANIM_DEF_PARTNER
-	splitbgprio ANIM_TARGET
-	setalpha 12, 8
-	fadetobg BG_THUNDER
-	waitbgfadeout
-	createvisualtask AnimTask_StartSlidingBg, 5, 4096, 0, 1, -1
-	waitbgfadein
-	playsewithpan SE_THUNDERSTORM, SOUND_PAN_TARGET
+	monbg ANIM_TARGET
+	setalpha 8, 8
+	createvisualtask AnimTask_AllBattlersInvisibleExceptAttackerAndTarget, 10
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 6, 0, 16, RGB_BLACK
+	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
+	createsprite gSpinningTriangleSpriteTemplate, ANIM_TARGET, 3, 0, 0, 1, 50
+	delay 15
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 64, 1
 	call IndignationBall
 	call IndignationBall
 	call IndignationBall
 	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	fadetobg BG_THUNDER
+	waitbgfadeout
+											@ ??, vel x, vel y, ??, ??
+	createvisualtask AnimTask_StartSlidingBg, 5, -256, 0, 1, -1
+	waitbgfadein
+	playsewithpan SE_THUNDERSTORM, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 64, 1
 	call IndignationBall2
 	call IndignationBall2
 	call IndignationBall2
+	createvisualtask AnimTask_ShockWaveLightning, 5, ANIM_TARGET
+	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 6, 18, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 3, 16, 0, RGB_WHITE
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 16, 16, RGB_BLACK
+	delay 4
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 0, 0, RGB_BLACK
+	invert_screen_color scenery=1 | 2 | 4
+	delay 1
+	invert_screen_color scenery=1 | 2 | 4
 	waitforvisualfinish
 	stopsound
-	clearmonbg ANIM_DEF_PARTNER
+	clearmonbg ANIM_TARGET
 	blendoff
 	call UnsetPsychicBg
 	end
@@ -17120,12 +17139,23 @@ IndignationBall2:
 	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -32, 240, 40, 11, -72, 1, 1
 	delay 6
 	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -33, 416, 40, 4, 64, 1, 1
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gTectonicRageExplosionSpriteTemplate, ANIM_TARGET, 2, -12, 31, 1, 0
 	delay 6
 	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -31, 288, 45, 6, -64, 1, 1
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gTectonicRageExplosionSpriteTemplate, ANIM_TARGET, 2, 15, 25, 1, 0
 	delay 6
 	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -28, 448, 45, 11, 72, 1, 1
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gTectonicRageExplosionSpriteTemplate, ANIM_TARGET, 2, -20, 23, 1, 0
 	delay 6
 	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -34, 464, 50, 10, -66, 1, 1
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gTectonicRageExplosionSpriteTemplate, ANIM_TARGET, 2, 36, 17, 1, 0
+	delay 6
+	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
+	createsprite gTectonicRageExplosionSpriteTemplate, ANIM_TARGET, 2, 28, 29, 1, 0
 	return
 
 gBattleAnimMove_PopulationBomb::
