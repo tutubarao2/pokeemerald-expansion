@@ -17074,6 +17074,60 @@ gBattleAnimMove_MalignantChain::
 	waitforvisualfinish
 	end
 
+@ novo ataque
+@ por enquanto usa animação do hurricane
+gBattleAnimMove_Indignation::
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	fadetobg BG_THUNDER
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, 4096, 0, 1, -1
+	waitbgfadein
+	playsewithpan SE_THUNDERSTORM, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 3, 64, 1
+	call IndignationBall
+	call IndignationBall
+	call IndignationBall
+	waitforvisualfinish
+	call IndignationBall2
+	call IndignationBall2
+	call IndignationBall2
+	waitforvisualfinish
+	stopsound
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	call UnsetPsychicBg
+	end
+IndignationBall:
+														       @ x, y, dur?, ??, ??, amplitude (e sentido), battler, indignation
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 28, 384, 50, 8, 50, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 32, 240, 40, 11, -46, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 33, 416, 40, 4, 42, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 31, 288, 45, 6, -42, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 28, 448, 45, 11, 46, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, 34, 464, 50, 10, -50, 1, 1
+	return
+IndignationBall2:
+														       @ x, y,  dur?, ??, ??, amplitude (e sentido), battler, indignation
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -28, 384, 50, 8, 80, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -32, 240, 40, 11, -72, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -33, 416, 40, 4, 64, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -31, 288, 45, 6, -64, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -28, 448, 45, 11, 72, 1, 1
+	delay 6
+	createsprite gIndignationBallSpriteTemplate, ANIM_TARGET, 2, 0, -34, 464, 50, 10, -66, 1, 1
+	return
+
 gBattleAnimMove_PopulationBomb::
 	monbg ANIM_TARGET
 	setalpha 12, 8
@@ -25151,6 +25205,7 @@ gBattleAnimMove_Whirlpool::
 	end
 
 WhirlpoolEffect:
+	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 28, 384, 50, 8, 50, ANIM_TARGET
 	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 28, 384, 50, 8, 50, ANIM_TARGET
 	delay 2
 	createsprite gWhirlpoolSpriteTemplate, ANIM_TARGET, 2, 0, 32, 240, 40, 11, -46, ANIM_TARGET

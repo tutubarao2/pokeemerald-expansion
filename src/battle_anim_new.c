@@ -3464,6 +3464,29 @@ static const union AffineAnimCmd* const sSpriteAffineAnimTable_GrowingSuperpower
     sSpriteAffineAnim_GrowingSuperpowerPlayerAttack,
     sSpriteAffineAnim_GrowingSuperpowerEnemyAttack,
 };
+
+// novo ataque
+static const union AnimCmd sAnimCmdIndignation[] =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnims_Indignation_Ball[] =
+{
+    sAnimCmdIndignation,
+};
+const struct SpriteTemplate gIndignationBallSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_INDIGNATION_BALL,
+    .paletteTag = ANIM_TAG_INDIGNATION_BALL,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_Indignation_Ball,
+    //.callback = AnimEllipticalGust
+    .callback = AnimParticleInVortex
+};
+
 const struct SpriteTemplate gGrowingSuperpowerTemplate =    // Used in Breakneck Blitz
 {
     .tileTag = ANIM_TAG_METEOR,

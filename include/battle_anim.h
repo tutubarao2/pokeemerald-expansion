@@ -598,6 +598,7 @@ void SpriteCB_RandomCentredHits(struct Sprite *sprite);
 void InitSpritePosToAnimTargetsCentre(struct Sprite *sprite, bool32 respectMonPicOffsets);
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_PrimalSymbol[];
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_MegaSymbol[];
+extern const union AnimCmd *const gAnims_Indignation_Ball[]; // novo ataque
 
 // battle_anim_ice.c
 void AnimIceBeamParticle(struct Sprite *sprite);

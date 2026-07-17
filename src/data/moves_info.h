@@ -21982,6 +21982,24 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_MalignantChain,
     },
 
+    // novo ataque
+    [MOVE_INDIGNATION] =
+    {
+        .name = COMPOUND_STRING("Indignation"),
+        .description = COMPOUND_STRING(
+            "Summons the thunder of\n"
+            "the gods."),
+        .effect = EFFECT_HIT,
+        .power = 150,
+        .type = TYPE_ELECTRIC,
+        .accuracy = 100,
+        .pp = 5,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .battleAnimScript = gBattleAnimMove_Indignation,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {

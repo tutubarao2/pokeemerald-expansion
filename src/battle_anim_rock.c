@@ -441,6 +441,7 @@ void AnimRockFragment(struct Sprite *sprite)
 // args[4] - increments some sin parameter
 // args[5] - fixed sin parameter
 // args[6] - attacker or target
+// ^não acredite totalmente, algumas informações estão erradas
 void AnimParticleInVortex(struct Sprite *sprite)
 {
     enum AnimBattler animBattler = gBattleAnimArgs[6];
@@ -453,16 +454,26 @@ void AnimParticleInVortex(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[2] = gBattleAnimArgs[4];
     sprite->data[3] = gBattleAnimArgs[5];
-
+    sprite->data[6] = gBattleAnimArgs[1]; // indica se o vortex sobe ou desce e é o offset y inicial
+    sprite->data[7] = gBattleAnimArgs[7]; // = 1 apenas se o ataque for indignation
     sprite->callback = AnimParticleInVortex_Step;
 }
 
 static void AnimParticleInVortex_Step(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[1];
-    sprite->y2 = -(sprite->data[4] >> 8);
+    if (sprite->data[6] < 0) // número arbitrário que imaginei não ser usado no código da GF
+        sprite->y2 = sprite->data[4] >> 8;
+    else
+        sprite->y2 = -(sprite->data[4] >> 8);
     sprite->x2 = Sin(sprite->data[5], sprite->data[3]);
     sprite->data[5] = (sprite->data[5] + sprite->data[2]) & 0xFF;
+    if (((sprite->data[3] > 0 && sprite->data[6] > 0) || (sprite->data[3] < 0 && sprite->data[6] < 0))
+    && sprite->data[7] == 1)
+        sprite->data[3]++; // aumenta a amplitude do movimento senoidal no eixo x para amplitudes positivas
+    else if (((sprite->data[3] < 0 && sprite->data[6] > 0) || (sprite->data[3] > 0 && sprite->data[6] < 0))
+    && sprite->data[7] == 1)
+        sprite->data[3]--; // aumenta a amplitude do movimento senoidal no eixo x para amplitudes negativas
 
     if (--sprite->data[0] == -1)
     {
