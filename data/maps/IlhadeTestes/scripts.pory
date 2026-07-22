@@ -1,0 +1,12 @@
+mapscripts IlhadeTestes_MapScripts {}
+
+script PortaTrancada {
+    lock
+    msgbox ("Esta porta está trancada.
+             Se você viu isso, o teste é
+             um sucesso!
+             
+             ÃÕãõ éáíóúàôâÔÂÊê\.")
+    release
+    end
+}
