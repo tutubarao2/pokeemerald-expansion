@@ -2,11 +2,22 @@ mapscripts IlhadeTestes_MapScripts {}
 
 script PortaTrancada {
     lock
-    msgbox ("Esta porta está trancada.
-             Se você viu isso, o teste é
-             um sucesso!
-             
-             ÃÕãõ éáíóúàôâÔÂÊê\.")
+    msgbox (format("Esta porta está trancada. Se você viu isso, o teste é um sucesso!"))
     release
     end
 }
+
+// Apesar deste script estar neste mapa em específico, ele deveria ser um Commom_eventSscript
+// que seria chamado sempre que o jogador pisasse em um save point. Deixei aqui só para testar
+script SavePoint {
+    lock
+    hidefollower (0)
+    fadescreencustom (FADE_FROM_CUSTOM, 3, 13, 0, 31) // modo, velocidade (menor é + rápido), r, g, b
+    special (HealPlayerParty)
+    msgbox ("Você e seus pokémon se sentem
+            revigorados.")
+    call (Common_EventScript_SaveGame)
+    release
+    end
+}
+

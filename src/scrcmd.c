@@ -66,6 +66,7 @@
 #include "constants/event_objects.h"
 #include "constants/map_types.h"
 #include "constants/party_menu.h"
+#include "constants/rgb.h"
 
 typedef u16 (*SpecialFunc)(void);
 typedef void (*NativeFunc)(struct ScriptContext *ctx);
@@ -825,6 +826,23 @@ bool8 ScrCmd_fadescreenspeed(struct ScriptContext *ctx)
 {
     u8 mode = ScriptReadByte(ctx);
     u8 speed = ScriptReadByte(ctx);
+
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
+
+    FadeScreen(mode, speed);
+    SetupNativeScript(ctx, IsPaletteNotActive);
+    return TRUE;
+}
+
+// novo
+bool8 ScrCmd_fadescreencustom(struct ScriptContext *ctx) 
+{
+    u8 mode = ScriptReadByte(ctx);
+    u8 speed = ScriptReadByte(ctx);
+    u8 r = ScriptReadByte(ctx); // cores entre 0 e 31
+    u8 g = ScriptReadByte(ctx);
+    u8 b = ScriptReadByte(ctx);
+    gWeatherPtr->fadeDestColor = RGB(r, g, b);
 
     Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
 

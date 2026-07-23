@@ -30,7 +30,26 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_SAFARI_ZONE_STATE",
+      "var_value": "0",
+      "script": "SavePoint"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_SAFARI_ZONE_STATE",
+      "var_value": "0",
+      "script": "SavePoint"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

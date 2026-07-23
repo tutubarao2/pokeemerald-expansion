@@ -1425,6 +1425,16 @@
 	.byte \speed
 	.endm
 
+	@ Fades the screen to a custom color. Modes are FADE_(TO/FROM)_(WHITE/BLACK/CUSTOM)
+	.macro fadescreencustom mode:req, speed:req, r:req, g:req, b:req
+	.byte SCR_OP_FADESCREENCUSTOM
+	.byte \mode
+	.byte \speed
+	.byte \r
+	.byte \g
+	.byte \b
+	.endm
+
 	@ Sets the flash level. A level of 0 is fully bright, a level of 1 is the largest flash radius, a level
 	@ of 7 is the smallest flash radius, a level of 8 is fully black.
 	.macro setflashlevel level:req

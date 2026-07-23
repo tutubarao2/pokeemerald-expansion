@@ -754,6 +754,10 @@ void FadeSelectedPals(u8 mode, s8 delay, u32 selectedPalettes)
         fadeColor = RGB_WHITEALPHA;
         fadeOut = FALSE;
         break;
+    case FADE_FROM_CUSTOM:
+        fadeColor = gWeatherPtr->fadeDestColor;
+        fadeOut = FALSE;
+        break;
     case FADE_TO_BLACK:
         fadeColor = RGB_BLACK;
         fadeOut = TRUE;
@@ -762,8 +766,12 @@ void FadeSelectedPals(u8 mode, s8 delay, u32 selectedPalettes)
         fadeColor = RGB_WHITEALPHA;
         fadeOut = TRUE;
         break;
+    case FADE_TO_CUSTOM:
+        fadeColor = gWeatherPtr->fadeDestColor;
+        fadeOut = TRUE;
+        break;
     default:
-        return;
+        return; // TODO: adicionar novas possibilidades de cor para fadescreen via macro/script
     }
 
     switch (gWeatherPtr->currWeather)
