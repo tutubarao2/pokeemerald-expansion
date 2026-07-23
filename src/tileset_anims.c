@@ -43,6 +43,7 @@ static void TilesetAnim_MauvilleGym(u16);
 static void TilesetAnim_BikeShop(u16);
 static void TilesetAnim_BattlePyramid(u16);
 static void TilesetAnim_BattleDome(u16);
+static void TilesetAnim_Unused2(u16); // novo
 static void QueueAnimTiles_General_Flower(u16);
 static void QueueAnimTiles_General_Water(u16);
 static void QueueAnimTiles_General_SandWaterEdge(u16);
@@ -73,10 +74,12 @@ static void QueueAnimTiles_MauvilleGym_ElectricGates(u16);
 static void QueueAnimTiles_SootopolisGym_Waterfalls(u16);
 static void QueueAnimTiles_EliteFour_GroundLights(u16);
 static void QueueAnimTiles_EliteFour_WallLights(u16);
+static void QueueAnimTiles_Save(u16); // novo
 
 const u16 gTilesetAnims_General_Flower_Frame1[] = INCGFX_U16("data/tilesets/primary/general/anim/flower/1.png", ".4bpp");
 const u16 gTilesetAnims_General_Flower_Frame0[] = INCGFX_U16("data/tilesets/primary/general/anim/flower/0.png", ".4bpp");
 const u16 gTilesetAnims_General_Flower_Frame2[] = INCGFX_U16("data/tilesets/primary/general/anim/flower/2.png", ".4bpp");
+
 const u16 tileset_anims_space_0[16] = {};
 
 const u16 *const gTilesetAnims_General_Flower[] = {
@@ -525,6 +528,21 @@ const u16 tileset_anims_space_11[224] = {};
 
 const u16 gTilesetAnims_Unused2_Frame1[] = INCGFX_U16("data/tilesets/secondary/unused_2/1.png", ".4bpp");
 
+const u16 gTilesetAnims_Unused2_Save_Frame0[] = INCGFX_U16("data/tilesets/secondary/unused_2/anim/Savepoint_frame1.png", ".4bpp");
+const u16 gTilesetAnims_Unused2_Save_Frame1[] = INCGFX_U16("data/tilesets/secondary/unused_2/anim/Savepoint_frame2.png", ".4bpp");
+const u16 gTilesetAnims_Unused2_Save_Frame2[] = INCGFX_U16("data/tilesets/secondary/unused_2/anim/Savepoint_frame3.png", ".4bpp");
+const u16 gTilesetAnims_Unused2_Save_Frame3[] = INCGFX_U16("data/tilesets/secondary/unused_2/anim/Savepoint_frame4.png", ".4bpp"); // novos
+
+
+const u16 *const gTilesetAnims_Unused2_Save[] = {
+    gTilesetAnims_Unused2_Save_Frame0,
+    gTilesetAnims_Unused2_Save_Frame1,
+    gTilesetAnims_Unused2_Save_Frame2,
+    gTilesetAnims_Unused2_Save_Frame3,
+    gTilesetAnims_Unused2_Save_Frame2,
+    gTilesetAnims_Unused2_Save_Frame1
+}; // novo
+
 const u16 *const gTilesetAnims_BattlePyramid_Torch[] = {
     gTilesetAnims_BattlePyramid_Torch_Frame0,
     gTilesetAnims_BattlePyramid_Torch_Frame1,
@@ -834,6 +852,13 @@ void InitTilesetAnim_BattleDome(void)
     sSecondaryTilesetAnimCallback = TilesetAnim_BattleDome;
 }
 
+void InitTilesetAnim_Save(void) // novo
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Unused2;
+}
+
 static void TilesetAnim_Rustboro(u16 timer)
 {
     if (timer % 8 == 0)
@@ -1110,6 +1135,12 @@ static void TilesetAnim_BattleDome2(u16 timer)
         BlendAnimPalette_BattleDome_FloorLightsNoBlend(timer / 4);
 }
 
+static void TilesetAnim_Unused2(u16 timer) // novo
+{
+    if (timer % 6 == 0)
+        QueueAnimTiles_Save(timer / 6);
+}
+
 static void QueueAnimTiles_Building_TVTurnedOn(u16 timer)
 {
     u16 i = timer % ARRAY_COUNT(gTilesetAnims_Building_TvTurnedOn);
@@ -1164,6 +1195,12 @@ static void QueueAnimTiles_BattlePyramid_StatueShadow(u16 timer)
     u16 i = timer % ARRAY_COUNT(gTilesetAnims_BattlePyramid_StatueShadow);
     AppendTilesetAnimToBuffer(gTilesetAnims_BattlePyramid_StatueShadow[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 135)), 8 * TILE_SIZE_4BPP);
 }
+
+static void QueueAnimTiles_Save(u16 timer)
+{
+   u16 i = timer % ARRAY_COUNT(gTilesetAnims_Unused2_Save);
+   AppendTilesetAnimToBuffer(gTilesetAnims_Unused2_Save[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(586)), 4 * TILE_SIZE_4BPP); // 0x24A = offset do tile
+} // novo
 
 static void BlendAnimPalette_BattleDome_FloorLights(u16 timer)
 {

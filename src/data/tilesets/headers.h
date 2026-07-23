@@ -456,7 +456,7 @@ const struct Tileset gTileset_Unused2 =
     .palettes = gTilesetPalettes_Unused2,
     .metatiles = gMetatiles_Unused2,
     .metatileAttributes = gMetatileAttributes_Unused2,
-    .callback = NULL,
+    .callback = InitTilesetAnim_Save, // novo
 };
 
 const struct Tileset gTileset_Contest =
