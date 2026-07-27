@@ -4196,6 +4196,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BirthIslandStone =
     .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Inanimate,
     .images = sPicTable_BirthIslandStone,
+    .affineAnims = sAffineAnimTable_Triangle,
 };
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Anabel = {

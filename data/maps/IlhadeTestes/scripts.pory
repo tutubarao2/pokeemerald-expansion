@@ -21,3 +21,21 @@ script SavePoint {
     end
 }
 
+script Anim {
+    lock
+    applymovement (LOCALID_TRIANGLE, moves(
+        init_affine_anim,
+        walk_down_affine, // usado por groudon e kyogre quando encontrados nas cavernas
+        walk_fast_up,
+        levitate
+    ))
+    waitmovement (0)
+    msgbox("Olá, humano!")
+    applymovement(LOCALID_TRIANGLE, moves(
+        clear_affine_anim,
+        stop_levitate
+    ))
+    waitmovement (0)
+    release
+    end
+}

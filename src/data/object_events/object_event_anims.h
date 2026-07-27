@@ -1178,6 +1178,12 @@ static const union AffineAnimCmd sAffineAnim_KyogreGroudon_DipWest[] =
     AFFINEANIMCMD_END,
 };
 
+static const union AffineAnimCmd sAffineAnim_Triangle[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_HoOhFlapWings[] =
 {
     ANIMCMD_FRAME(3, 8),
@@ -1601,6 +1607,11 @@ static const union AffineAnimCmd *const sAffineAnimTable_KyogreGroudon[] = {
     sAffineAnim_KyogreGroudon_AttackEast,   // Unused
     sAffineAnim_KyogreGroudon_DipWest,      // Unused
     sAffineAnim_KyogreGroudon_DipEast,      // Unused
+};
+
+// novo
+static const union AffineAnimCmd *const sAffineAnimTable_Triangle[] = {
+    sAffineAnim_Triangle,
 };
 
 // For animations with alternating steps
