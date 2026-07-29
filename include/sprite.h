@@ -344,4 +344,6 @@ u32 GetSpriteWidth(struct Sprite *sprite);
 u32 GetSpriteHeight(struct Sprite *sprite);
 u32 CountFreePaletteSlots(void);
 
+void ObjAffineRotThenScale(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation); // novo
+
 #endif //GUARD_SPRITE_H

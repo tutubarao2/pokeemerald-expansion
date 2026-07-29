@@ -5,6 +5,7 @@
 #include "palette.h"
 #include "string_util.h"
 #include "text.h"
+#include "trig.h" // novo
 #include "battle_anim.h"
 #include "test/test.h"
 
@@ -74,7 +75,7 @@ static void JumpToTopOfAffineAnimLoop(u8 matrixNum, struct Sprite *sprite);
 static void AffineAnimCmd_jump(u8 matrixNum, struct Sprite *sprite);
 static void AffineAnimCmd_end(u8 matrixNum, struct Sprite *sprite);
 static void AffineAnimCmd_frame(u8 matrixNum, struct Sprite *sprite);
-static void CopyOamMatrix(u8 destMatrixIndex, struct OamMatrix *srcMatrix);
+//static void CopyOamMatrix(u8 destMatrixIndex, struct OamMatrix *srcMatrix);
 static u8 GetSpriteMatrixNum(struct Sprite *sprite);
 static void AffineAnimStateRestartAnim(u8 matrixNum);
 static void AffineAnimStateStartAnim(u8 matrixNum, u8 animNum);
@@ -83,7 +84,7 @@ static void ApplyAffineAnimFrameAbsolute(u8 matrixNum, struct AffineAnimFrameCmd
 static void DecrementAnimDelayCounter(struct Sprite *sprite);
 static bool8 DecrementAffineAnimDelayCounter(struct Sprite *sprite, u8 matrixNum);
 static void ApplyAffineAnimFrameRelativeAndUpdateMatrix(u8 matrixNum, struct AffineAnimFrameCmd *frameCmd);
-static s16 ConvertScaleParam(s16 scale);
+//static s16 ConvertScaleParam(s16 scale);
 static void GetAffineAnimFrame(u8 matrixNum, struct Sprite *sprite, struct AffineAnimFrameCmd *frameCmd);
 static void ApplyAffineAnimFrame(u8 matrixNum, struct AffineAnimFrameCmd *frameCmd);
 static void AllocSpriteTileRange(u16 tag, u16 start, u16 count);
@@ -1204,15 +1205,15 @@ void AffineAnimCmd_frame(u8 matrixNum, struct Sprite *sprite)
     sAffineAnimStates[matrixNum].delayCounter = frameCmd.duration;
 }
 
-void CopyOamMatrix(u8 destMatrixIndex, struct OamMatrix *srcMatrix)
+/*void CopyOamMatrix(u8 destMatrixIndex, struct OamMatrix *srcMatrix)
 {
     gOamMatrices[destMatrixIndex].a = srcMatrix->a;
     gOamMatrices[destMatrixIndex].b = srcMatrix->b;
     gOamMatrices[destMatrixIndex].c = srcMatrix->c;
     gOamMatrices[destMatrixIndex].d = srcMatrix->d;
-}
+}*/
 
-u8 GetSpriteMatrixNum(struct Sprite *sprite)
+static u8 GetSpriteMatrixNum(struct Sprite *sprite)
 {
     u8 matrixNum = 0;
     if (sprite->oam.affineMode & ST_OAM_AFFINE_ON_MASK)
@@ -1282,9 +1283,9 @@ void AffineAnimStateStartAnim(u8 matrixNum, u8 animNum)
     sAffineAnimStates[matrixNum].animCmdIndex = 0;
     sAffineAnimStates[matrixNum].delayCounter = 0;
     sAffineAnimStates[matrixNum].loopCounter = 0;
-    sAffineAnimStates[matrixNum].xScale = 0x0100;
-    sAffineAnimStates[matrixNum].yScale = 0x0100;
     sAffineAnimStates[matrixNum].rotation = 0;
+    sAffineAnimStates[matrixNum].xScale = 0x0100;
+    sAffineAnimStates[matrixNum].yScale = 0x0100; // novo, troquei ordem
 }
 
 void AffineAnimStateReset(u8 matrixNum)
@@ -1293,16 +1294,19 @@ void AffineAnimStateReset(u8 matrixNum)
     sAffineAnimStates[matrixNum].animCmdIndex = 0;
     sAffineAnimStates[matrixNum].delayCounter = 0;
     sAffineAnimStates[matrixNum].loopCounter = 0;
-    sAffineAnimStates[matrixNum].xScale = 0x0100;
-    sAffineAnimStates[matrixNum].yScale = 0x0100;
     sAffineAnimStates[matrixNum].rotation = 0;
+    sAffineAnimStates[matrixNum].xScale = 0x0100;
+    sAffineAnimStates[matrixNum].yScale = 0x0100; // novo
 }
 
 void ApplyAffineAnimFrameAbsolute(u8 matrixNum, struct AffineAnimFrameCmd *frameCmd)
 {
-    sAffineAnimStates[matrixNum].xScale = frameCmd->xScale;
+    /*sAffineAnimStates[matrixNum].xScale = frameCmd->xScale;
     sAffineAnimStates[matrixNum].yScale = frameCmd->yScale;
+    sAffineAnimStates[matrixNum].rotation = frameCmd->rotation << 8;*/
     sAffineAnimStates[matrixNum].rotation = frameCmd->rotation << 8;
+    sAffineAnimStates[matrixNum].xScale = frameCmd->xScale;
+    sAffineAnimStates[matrixNum].yScale = frameCmd->yScale; // novo, ordem trocada
 }
 
 void DecrementAnimDelayCounter(struct Sprite *sprite)
@@ -1321,22 +1325,24 @@ bool8 DecrementAffineAnimDelayCounter(struct Sprite *sprite, u8 matrixNum)
 void ApplyAffineAnimFrameRelativeAndUpdateMatrix(u8 matrixNum, struct AffineAnimFrameCmd *frameCmd)
 {
     struct ObjAffineSrcData srcData;
-    struct OamMatrix matrix;
+    //struct OamMatrix matrix;
     sAffineAnimStates[matrixNum].xScale += frameCmd->xScale;
     sAffineAnimStates[matrixNum].yScale += frameCmd->yScale;
     sAffineAnimStates[matrixNum].rotation = (sAffineAnimStates[matrixNum].rotation + (frameCmd->rotation << 8)) & ~0xFF;
-    srcData.xScale = ConvertScaleParam(sAffineAnimStates[matrixNum].xScale);
-    srcData.yScale = ConvertScaleParam(sAffineAnimStates[matrixNum].yScale);
+    //srcData.xScale = ConvertScaleParam(sAffineAnimStates[matrixNum].xScale);
+    //srcData.yScale = ConvertScaleParam(sAffineAnimStates[matrixNum].yScale);
     srcData.rotation = sAffineAnimStates[matrixNum].rotation;
-    ObjAffineSet(&srcData, &matrix, 1, 2);
-    CopyOamMatrix(matrixNum, &matrix);
+    //ObjAffineSet(&srcData, &matrix, 1, 2);
+    ObjAffineRotThenScale(matrixNum, sAffineAnimStates[matrixNum].xScale, 
+        sAffineAnimStates[matrixNum].yScale, srcData.rotation);
+    //CopyOamMatrix(matrixNum, &matrix);
 }
 
-s16 ConvertScaleParam(s16 scale)
+/*s16 ConvertScaleParam(s16 scale)
 {
     s32 val = 0x10000;
     return SAFE_DIV(val, scale);
-}
+}*/
 
 void GetAffineAnimFrame(u8 matrixNum, struct Sprite *sprite, struct AffineAnimFrameCmd *frameCmd)
 {
@@ -1495,13 +1501,14 @@ void InitSpriteAffineAnim(struct Sprite *sprite)
 
 void SetOamMatrixRotationScaling(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation)
 {
-    struct ObjAffineSrcData srcData;
+    /*struct ObjAffineSrcData srcData;
     struct OamMatrix matrix;
     srcData.xScale = ConvertScaleParam(xScale);
     srcData.yScale = ConvertScaleParam(yScale);
     srcData.rotation = rotation;
-    ObjAffineSet(&srcData, &matrix, 1, 2);
-    CopyOamMatrix(matrixNum, &matrix);
+    //ObjAffineSet(&srcData, &matrix, 1, 2);*/ // é aqui que é definido o cálculo da matriz de transformações afins
+    ObjAffineRotThenScale(matrixNum, xScale, yScale, rotation);
+    //CopyOamMatrix(matrixNum, &matrix);
 }
 
 static u16 LoadSpriteSheetWithOffset(const struct SpriteSheet *sheet, u32 offset)
@@ -2189,4 +2196,22 @@ u32 CountFreePaletteSlots(void)
             count++;
 
     return count;
+}
+
+// Substitui a syscall ObjAffineSet
+void ObjAffineRotThenScale(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation) // novo
+{
+    // sen e cos não podem ser convertidos usando >> 8 antes de serem multiplicados, pois isso
+    // resulta em zero para todos os ângulos, exceto 0°, 90°, 180° e 270°
+    u8 angleIndex = (rotation >> 8) & 0xFF; // rotation usa apenas os 8 bits mais significativos, é preciso converter antes de aplicar a máscara
+    s32 sen = gSineTable[angleIndex];
+    s32 cos = gSineTable[(angleIndex + 64) & 0xFF];
+
+    // problemas com a área do sprite sendo completamente preenchida por uma cor só
+    // provavelmente estão relacionados com cos e sen tendo valores interpretados como zero
+    // todos os índices (a, b, c e d) serem zero resulta em um quadrado monocromático
+    gOamMatrices[matrixNum].a = SAFE_DIV((cos * 256), xScale);//(cos * xScale) >> 8;
+    gOamMatrices[matrixNum].b = SAFE_DIV((-sen * 256), yScale);//(-sen * xScale) >> 8;
+    gOamMatrices[matrixNum].c = SAFE_DIV((sen * 256), xScale);//(sen * yScale) >> 8;
+    gOamMatrices[matrixNum].d = SAFE_DIV((cos * 256), yScale);//(cos * yScale) >> 8;
 }

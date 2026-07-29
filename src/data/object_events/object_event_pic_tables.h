@@ -1359,6 +1359,12 @@ static const struct SpriteFrameImage sPicTable_ApricornTree[] = {
     overworld_frame(gObjectEventPic_ApricornTree, 2, 2, 0),
 };
 
+// novo
+static const struct SpriteFrameImage sPicTable_Triangle[] = {
+    //obj_frame_tiles(gObjectEventPic_Triangle),
+    overworld_frame(gObjectEventPic_Triangle, 4, 4, 0)
+};
+
 #if IS_FRLG
 
 static const struct SpriteFrameImage sPicTable_RedNormal[] = {

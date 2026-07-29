@@ -2920,6 +2920,13 @@
 	.2byte \localId
 	.endm
 
+	@ novo
+	@ Inicia animação afim no object definido pelo localid fornecido.
+	.macro triangleaffine localId:req
+	.byte SCR_OP_TRIANGLEAFFINE
+	.2byte \localId
+	.endm
+
 @ FRLG
 
 

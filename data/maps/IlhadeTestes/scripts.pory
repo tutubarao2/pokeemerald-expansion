@@ -14,8 +14,7 @@ script SavePoint {
     hidefollower (0)
     fadescreencustom (FADE_FROM_CUSTOM, 3, 13, 0, 31) // modo, velocidade (menor é + rápido), r, g, b
     special (HealPlayerParty)
-    msgbox ("Você e seus pokémon se sentem
-            revigorados.")
+    msgbox ("Você e seus pokémon se sentem\nrevigorados.")
     call (Common_EventScript_SaveGame)
     release
     end
@@ -23,19 +22,12 @@ script SavePoint {
 
 script Anim {
     lock
-    applymovement (LOCALID_TRIANGLE, moves(
-        init_affine_anim,
-        walk_down_affine, // usado por groudon e kyogre quando encontrados nas cavernas
-        walk_fast_up,
-        levitate
-    ))
-    waitmovement (0)
+    triangleaffine(LOCALID_TRIANGLE)
+    delay (120)
     msgbox("Olá, humano!")
-    applymovement(LOCALID_TRIANGLE, moves(
-        clear_affine_anim,
-        stop_levitate
-    ))
-    waitmovement (0)
+    triangleaffine(LOCALID_TRIANGLE)
+    delay (100)
+    //triangleaffine(LOCALID_TRIANGLE)
     release
     end
 }

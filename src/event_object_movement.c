@@ -12243,3 +12243,56 @@ bool8 MovementType_OverworldWildEncounter_Despawn_Step11(struct ObjectEvent *obj
 }
 
 #undef sDespawnTimer
+
+
+static const union AffineAnimCmd sAffineAnim_TriangleAppear[] =
+{
+    AFFINEANIMCMD_FRAME(256, 0, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 4, 4, 32),
+    AFFINEANIMCMD_FRAME(0, 0, 4, 64),
+    //AFFINEANIMCMD_FRAME(0, -4, 0, 32),
+    AFFINEANIMCMD_JUMP(2),
+    //AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_TriangleDisappear[] =
+{
+    AFFINEANIMCMD_FRAME(0, -4, 4, 32),
+    //AFFINEANIMCMD_FRAME(-4, -4, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+// novo
+static const union AffineAnimCmd *const sAffineAnimTable_Triangle[] = {
+    // o animNum que a função ChangeSpriteAffineAnimIfDifferent usa se refere a esses
+    sAffineAnim_TriangleAppear, // 0
+    sAffineAnim_TriangleDisappear, // 1
+};
+
+void InitTriangleAffineAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF
+        && sprite->data[5] == 1)
+    {
+        sprite->affineAnimPaused = TRUE;
+        FreeSpriteOamMatrix(sprite);
+        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+        sprite->affineAnims = gDummySpriteAffineAnimTable;
+    }
+    else if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
+    {
+        //sprite->affineAnims = sAffineAnimTable_Triangle;
+        ChangeSpriteAffineAnimIfDifferent(sprite, 1); // muda para a animação do número fornecido como argumento
+        sprite->data[5] = 1;
+    }
+    else 
+    {
+        sprite->affineAnims = sAffineAnimTable_Triangle;
+        sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+        InitSpriteAffineAnim(sprite);
+        CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+        sprite->affineAnimPaused = FALSE;
+        LoadFillColorPalette(RGB_PURPLE, OBJ_EVENT_PAL_TAG_WHITE, sprite);
+        sprite->data[5] = 2;
+    }
+}

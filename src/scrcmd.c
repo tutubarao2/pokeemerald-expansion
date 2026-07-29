@@ -3440,3 +3440,17 @@ bool8 ScrCmd_getbraillestringwidth(struct ScriptContext * ctx)
     gSpecialVar_0x8004 = GetStringWidth(FONT_BRAILLE, msg, -1);
     return FALSE;
 }
+
+// novo
+bool8 ScrCmd_triangleaffine(struct ScriptContext * ctx)
+{
+    u16 localId = VarGet(ScriptReadHalfword(ctx));
+    struct ObjectEvent *objEvent;
+
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
+
+    objEvent = &gObjectEvents[GetObjectEventIdByLocalId(localId)];
+    gObjectEvents[GetObjectEventIdByLocalId(localId)].directionOverwrite = DIR_NONE;
+    InitTriangleAffineAnim(objEvent, &gSprites[objEvent->spriteId]);
+    return FALSE;
+}
