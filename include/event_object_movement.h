@@ -569,6 +569,6 @@ u8 MovementType_OverworldWildEncounter_Despawn_Step10(struct ObjectEvent *object
 u8 MovementType_OverworldWildEncounter_Despawn_Step11(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 
 // novo
-void InitTriangleAffineAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim, bool8 terminando);
 
 #endif //GUARD_EVENT_OBJECT_MOVEMENT_H

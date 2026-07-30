@@ -2207,11 +2207,10 @@ void ObjAffineRotThenScale(u8 matrixNum, s16 xScale, s16 yScale, u16 rotation) /
     s32 sen = gSineTable[angleIndex];
     s32 cos = gSineTable[(angleIndex + 64) & 0xFF];
 
-    // problemas com a área do sprite sendo completamente preenchida por uma cor só
-    // provavelmente estão relacionados com cos e sen tendo valores interpretados como zero
     // todos os índices (a, b, c e d) serem zero resulta em um quadrado monocromático
-    gOamMatrices[matrixNum].a = SAFE_DIV((cos * 256), xScale);//(cos * xScale) >> 8;
-    gOamMatrices[matrixNum].b = SAFE_DIV((-sen * 256), yScale);//(-sen * xScale) >> 8;
-    gOamMatrices[matrixNum].c = SAFE_DIV((sen * 256), xScale);//(sen * yScale) >> 8;
-    gOamMatrices[matrixNum].d = SAFE_DIV((cos * 256), yScale);//(cos * yScale) >> 8;
+    // se xScale ou yScale forem zero, SAVE_DIV retorna zero
+    gOamMatrices[matrixNum].a = SAFE_DIV((cos * 256), xScale);
+    gOamMatrices[matrixNum].b = SAFE_DIV((-sen * 256), yScale);
+    gOamMatrices[matrixNum].c = SAFE_DIV((sen * 256), xScale);
+    gOamMatrices[matrixNum].d = SAFE_DIV((cos * 256), yScale);
 }

@@ -3442,15 +3442,18 @@ bool8 ScrCmd_getbraillestringwidth(struct ScriptContext * ctx)
 }
 
 // novo
-bool8 ScrCmd_triangleaffine(struct ScriptContext * ctx)
+bool8 ScrCmd_efeitografico(struct ScriptContext * ctx)
 {
     u16 localId = VarGet(ScriptReadHalfword(ctx));
+    u8 efeito = ScriptReadByte(ctx);
+    u8 anim = ScriptReadByte(ctx);
+    bool8 terminando = ScriptReadByte(ctx);
     struct ObjectEvent *objEvent;
 
     Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
 
     objEvent = &gObjectEvents[GetObjectEventIdByLocalId(localId)];
     gObjectEvents[GetObjectEventIdByLocalId(localId)].directionOverwrite = DIR_NONE;
-    InitTriangleAffineAnim(objEvent, &gSprites[objEvent->spriteId]);
+    AplicaEfeitoGrafico(objEvent, efeito, anim, terminando);
     return FALSE;
 }

@@ -3,60 +3,90 @@ IlhadeTestes_MapScripts::
 
 
 PortaTrancada::
-# 4 "data/maps/IlhadeTestes/scripts.pory"
+# 7 "data/maps/IlhadeTestes/scripts.pory"
 	lock
-# 5 "data/maps/IlhadeTestes/scripts.pory"
+# 8 "data/maps/IlhadeTestes/scripts.pory"
 	msgbox PortaTrancada_Text_0
-# 6 "data/maps/IlhadeTestes/scripts.pory"
+# 9 "data/maps/IlhadeTestes/scripts.pory"
 	release
 	end
 
 
 SavePoint::
-# 13 "data/maps/IlhadeTestes/scripts.pory"
-	lock
-# 14 "data/maps/IlhadeTestes/scripts.pory"
-	hidefollower 0
-# 15 "data/maps/IlhadeTestes/scripts.pory"
-	fadescreencustom FADE_FROM_CUSTOM, 3, 13, 0, 31
 # 16 "data/maps/IlhadeTestes/scripts.pory"
-	special HealPlayerParty
+	lock
 # 17 "data/maps/IlhadeTestes/scripts.pory"
-	msgbox SavePoint_Text_0
+	hidefollower 0
 # 18 "data/maps/IlhadeTestes/scripts.pory"
-	call Common_EventScript_SaveGame
+	fadescreencustom FADE_FROM_CUSTOM, 3, 13, 0, 31
 # 19 "data/maps/IlhadeTestes/scripts.pory"
+	special HealPlayerParty
+# 20 "data/maps/IlhadeTestes/scripts.pory"
+	msgbox SavePoint_Text_0
+# 21 "data/maps/IlhadeTestes/scripts.pory"
+	call Common_EventScript_SaveGame
+# 22 "data/maps/IlhadeTestes/scripts.pory"
 	release
 	end
 
 
 Anim::
-# 24 "data/maps/IlhadeTestes/scripts.pory"
-	lock
-# 25 "data/maps/IlhadeTestes/scripts.pory"
-	triangleaffine LOCALID_TRIANGLE
-# 26 "data/maps/IlhadeTestes/scripts.pory"
-	delay 120
 # 27 "data/maps/IlhadeTestes/scripts.pory"
-	msgbox Anim_Text_0
+	lock
 # 28 "data/maps/IlhadeTestes/scripts.pory"
-	triangleaffine LOCALID_TRIANGLE
+	clearflag FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE
 # 29 "data/maps/IlhadeTestes/scripts.pory"
-	delay 100
+	addobject LOCALID_TRIANGLE
+# 30 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_TRIANGLE, 0, 0, 0
 # 31 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_TRIANGLE, 1, 0, 0
+# 32 "data/maps/IlhadeTestes/scripts.pory"
+	delay 100
+# 33 "data/maps/IlhadeTestes/scripts.pory"
+	clearflag FLAG_HIDE_DEOXYS
+# 34 "data/maps/IlhadeTestes/scripts.pory"
+	addobject LOCALID_DEOXYS
+# 35 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_DEOXYS, 0, 2, 0
+# 36 "data/maps/IlhadeTestes/scripts.pory"
+	delay 126
+# 40 "data/maps/IlhadeTestes/scripts.pory"
+	msgbox Anim_Text_0
+# 44 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_DEOXYS, 0, 3, 0
+# 45 "data/maps/IlhadeTestes/scripts.pory"
+	delay 126
+# 46 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_DEOXYS, 0, 3, 1
+# 47 "data/maps/IlhadeTestes/scripts.pory"
+	removeobject LOCALID_DEOXYS
+# 48 "data/maps/IlhadeTestes/scripts.pory"
+	setflag FLAG_HIDE_DEOXYS
+# 49 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_TRIANGLE, 0, 1, 0
+# 50 "data/maps/IlhadeTestes/scripts.pory"
+	delay 108
+# 51 "data/maps/IlhadeTestes/scripts.pory"
+	efeitografico LOCALID_TRIANGLE, 0, 1, 1
+# 52 "data/maps/IlhadeTestes/scripts.pory"
+	removeobject LOCALID_TRIANGLE
+# 53 "data/maps/IlhadeTestes/scripts.pory"
+	setflag FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE
+# 55 "data/maps/IlhadeTestes/scripts.pory"
 	release
 	end
 
 
 PortaTrancada_Text_0:
-# 5 "data/maps/IlhadeTestes/scripts.pory"
+# 8 "data/maps/IlhadeTestes/scripts.pory"
 	.string "Esta porta está trancada. Se você viu\n"
 	.string "isso, o teste é um sucesso!$"
 
 SavePoint_Text_0:
-# 17 "data/maps/IlhadeTestes/scripts.pory"
+# 20 "data/maps/IlhadeTestes/scripts.pory"
 	.string "Você e seus pokémon se sentem\nrevigorados.$"
 
 Anim_Text_0:
-# 27 "data/maps/IlhadeTestes/scripts.pory"
+# 40 "data/maps/IlhadeTestes/scripts.pory"
 	.string "Olá, humano!$"

@@ -2922,9 +2922,12 @@
 
 	@ novo
 	@ Inicia animação afim no object definido pelo localid fornecido.
-	.macro triangleaffine localId:req
-	.byte SCR_OP_TRIANGLEAFFINE
+	.macro efeitografico localId:req, efeito:req, anim:req, terminando:req
+	.byte SCR_OP_EFEITOGRAFICO
 	.2byte \localId
+	.byte \efeito
+	.byte \anim
+	.byte \terminando
 	.endm
 
 @ FRLG

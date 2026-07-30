@@ -12244,55 +12244,88 @@ bool8 MovementType_OverworldWildEncounter_Despawn_Step11(struct ObjectEvent *obj
 
 #undef sDespawnTimer
 
+#define AFFINE 0
+#define ALPHABLEND 1
 
 static const union AffineAnimCmd sAffineAnim_TriangleAppear[] =
 {
-    AFFINEANIMCMD_FRAME(256, 0, 0, 0),
-    AFFINEANIMCMD_FRAME(0, 4, 4, 32),
-    AFFINEANIMCMD_FRAME(0, 0, 4, 64),
-    //AFFINEANIMCMD_FRAME(0, -4, 0, 32),
+    // o sprite precisa iniciar a animação pelo menos com um pixel, caso contrário o quadrado inteiro será preenchido
+    AFFINEANIMCMD_FRAME(4, 4, 0, 0),
+    AFFINEANIMCMD_FRAME(4, 1, 3, 108),
+    AFFINEANIMCMD_FRAME(0, 0, 3, 60),
     AFFINEANIMCMD_JUMP(2),
-    //AFFINEANIMCMD_END,
 };
 
 static const union AffineAnimCmd sAffineAnim_TriangleDisappear[] =
 {
-    AFFINEANIMCMD_FRAME(0, -4, 4, 32),
-    //AFFINEANIMCMD_FRAME(-4, -4, 0, 0),
+    // quando desaparecendo, é importante não zerar os valores de xScale nem yScale para não gerar bug gráfico
+    AFFINEANIMCMD_FRAME(-4, -1, 3, 108),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_AppearFromFloor[] =
+{
+    AFFINEANIMCMD_FRAME(130, 4, 0, 0),
+    AFFINEANIMCMD_FRAME(1, 2, 0, 126),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_DisappearToFloor[] =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(-1, -2, 0, 126),
     AFFINEANIMCMD_END,
 };
 
 // novo
-static const union AffineAnimCmd *const sAffineAnimTable_Triangle[] = {
-    // o animNum que a função ChangeSpriteAffineAnimIfDifferent usa se refere a esses
+static const union AffineAnimCmd *const sAffineAnimTable_OW[] = {
+    // o animNum que a função ChangeSpriteAffineAnimIfDifferent usa se refere a estes
     sAffineAnim_TriangleAppear, // 0
     sAffineAnim_TriangleDisappear, // 1
+    sAffineAnim_AppearFromFloor,
+    sAffineAnim_DisappearToFloor,
 };
 
-void InitTriangleAffineAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+// Obs: Applymovement causa mal funcionamento de animações afins
+void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim, bool8 terminando)
 {
-    if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF
-        && sprite->data[5] == 1)
+    struct Sprite *sprite = &gSprites[objectEvent->spriteId];
+
+    switch (efeito)
     {
-        sprite->affineAnimPaused = TRUE;
-        FreeSpriteOamMatrix(sprite);
-        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
-        sprite->affineAnims = gDummySpriteAffineAnimTable;
-    }
-    else if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
-    {
-        //sprite->affineAnims = sAffineAnimTable_Triangle;
-        ChangeSpriteAffineAnimIfDifferent(sprite, 1); // muda para a animação do número fornecido como argumento
-        sprite->data[5] = 1;
-    }
-    else 
-    {
-        sprite->affineAnims = sAffineAnimTable_Triangle;
-        sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
-        InitSpriteAffineAnim(sprite);
-        CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
-        sprite->affineAnimPaused = FALSE;
-        LoadFillColorPalette(RGB_PURPLE, OBJ_EVENT_PAL_TAG_WHITE, sprite);
-        sprite->data[5] = 2;
+    case (AFFINE):
+        if (terminando)
+        {
+            sprite->affineAnimPaused = TRUE;
+            FreeSpriteOamMatrix(sprite);
+            sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+            sprite->affineAnims = gDummySpriteAffineAnimTable;
+        }
+        else
+        {
+            if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
+            {
+                ChangeSpriteAffineAnimIfDifferent(sprite, anim);
+            }
+            else
+            {
+                sprite->affineAnims = sAffineAnimTable_OW;
+                sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+                InitSpriteAffineAnim(sprite);
+                sprite->subspriteMode = SUBSPRITES_OFF; // isso evita que a posição do sprite seja atualizada quando ele dobra de tamanho
+                sprite->affineAnimPaused = FALSE;
+                ChangeSpriteAffineAnimIfDifferent(sprite, anim); // muda para a animação do número fornecido como argumento
+            }
+        }
+        break;
+    case (ALPHABLEND):
+        if (terminando)
+            sprite->oam.objMode = ST_OAM_OBJ_NORMAL;
+        else
+            sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        break;
     }
 }
+
+#undef AFFINE
+#undef ALPHABLEND

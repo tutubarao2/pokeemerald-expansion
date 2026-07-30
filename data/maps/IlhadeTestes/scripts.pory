@@ -1,5 +1,8 @@
 mapscripts IlhadeTestes_MapScripts {}
 
+const AFFINE = 0
+const ALPHABLEND = 1
+
 script PortaTrancada {
     lock
     msgbox (format("Esta porta está trancada. Se você viu isso, o teste é um sucesso!"))
@@ -7,7 +10,7 @@ script PortaTrancada {
     end
 }
 
-// Apesar deste script estar neste mapa em específico, ele deveria ser um Commom_eventSscript
+// Apesar deste script estar neste mapa em específico, ele deveria ser um Commom_eventScript
 // que seria chamado sempre que o jogador pisasse em um save point. Deixei aqui só para testar
 script SavePoint {
     lock
@@ -22,12 +25,33 @@ script SavePoint {
 
 script Anim {
     lock
-    triangleaffine(LOCALID_TRIANGLE)
-    delay (120)
-    msgbox("Olá, humano!")
-    triangleaffine(LOCALID_TRIANGLE)
+    clearflag (FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE)
+    addobject (LOCALID_TRIANGLE)
+    efeitografico(LOCALID_TRIANGLE, AFFINE, 0, 0)
+    efeitografico(LOCALID_TRIANGLE, ALPHABLEND, 0, 0)
     delay (100)
-    //triangleaffine(LOCALID_TRIANGLE)
+    clearflag (FLAG_HIDE_DEOXYS)
+    addobject (LOCALID_DEOXYS)
+    efeitografico(LOCALID_DEOXYS, AFFINE, 2, 0)
+    delay(126)
+    //applymovement (LOCALID_DEOXYS, moves(
+        //walk_down
+    //))
+    msgbox("Olá, humano!")
+    //applymovement (LOCALID_DEOXYS, moves(
+        //walk_up
+    //))
+    efeitografico(LOCALID_DEOXYS, AFFINE, 3, 0)
+    delay(126)
+    efeitografico(LOCALID_DEOXYS, AFFINE, 3, 1)
+    removeobject(LOCALID_DEOXYS)
+    setflag(FLAG_HIDE_DEOXYS)
+    efeitografico(LOCALID_TRIANGLE, AFFINE, 1, 0)
+    delay (108)
+    efeitografico(LOCALID_TRIANGLE, AFFINE, 1, 1)
+    removeobject (LOCALID_TRIANGLE)
+    setflag (FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE)
+    //setvar (VAR_SAFARI_ZONE_STATE, 1)
     release
     end
 }
