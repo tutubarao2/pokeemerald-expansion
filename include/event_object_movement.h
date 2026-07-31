@@ -569,6 +569,7 @@ u8 MovementType_OverworldWildEncounter_Despawn_Step10(struct ObjectEvent *object
 u8 MovementType_OverworldWildEncounter_Despawn_Step11(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 
 // novo
-void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim, bool8 terminando);
+void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim);
+void RemoveEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito);
 
 #endif //GUARD_EVENT_OBJECT_MOVEMENT_H

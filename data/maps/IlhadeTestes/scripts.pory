@@ -14,7 +14,7 @@ script PortaTrancada {
 // que seria chamado sempre que o jogador pisasse em um save point. Deixei aqui só para testar
 script SavePoint {
     lock
-    hidefollower (0)
+    fadescreencustom (FADE_TO_CUSTOM, -8, 13, 0, 31) // modo, velocidade (menor é + rápido), r, g, b
     fadescreencustom (FADE_FROM_CUSTOM, 3, 13, 0, 31) // modo, velocidade (menor é + rápido), r, g, b
     special (HealPlayerParty)
     msgbox ("Você e seus pokémon se sentem\nrevigorados.")
@@ -25,33 +25,47 @@ script SavePoint {
 
 script Anim {
     lock
+    special (SpawnCameraObject)
+    applymovement (LOCALID_CAMERA, moves(
+        walk_up
+    ))
+    waitmovement (LOCALID_CAMERA)
     clearflag (FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE)
     addobject (LOCALID_TRIANGLE)
-    efeitografico(LOCALID_TRIANGLE, AFFINE, 0, 0)
-    efeitografico(LOCALID_TRIANGLE, ALPHABLEND, 0, 0)
+    efeitografico(LOCALID_TRIANGLE, AFFINE, 0)
+    efeitografico(LOCALID_TRIANGLE, ALPHABLEND, 0)
     delay (100)
     clearflag (FLAG_HIDE_DEOXYS)
     addobject (LOCALID_DEOXYS)
-    efeitografico(LOCALID_DEOXYS, AFFINE, 2, 0)
+    efeitografico(LOCALID_DEOXYS, AFFINE, 2)
+    setobjectsubpriority (LOCALID_DEOXYS, MAP_ILHADE_TESTES, 0) // controla o posicionamento dos sprites
     delay(126)
-    //applymovement (LOCALID_DEOXYS, moves(
-        //walk_down
-    //))
-    msgbox("Olá, humano!")
-    //applymovement (LOCALID_DEOXYS, moves(
-        //walk_up
-    //))
-    efeitografico(LOCALID_DEOXYS, AFFINE, 3, 0)
-    delay(126)
-    efeitografico(LOCALID_DEOXYS, AFFINE, 3, 1)
+    applymovement (LOCALID_DEOXYS, moves(
+        levitate
+    ))
+    waitmovement (LOCALID_DEOXYS)
+    removeefeitografico(LOCALID_DEOXYS, AFFINE) // por algum motivo, é preciso remover a animação antes de applymovement de novo
+    msgbox("Hello!")
+    applymovement (LOCALID_DEOXYS, moves(
+        stop_levitate
+    ))
+    waitmovement (LOCALID_DEOXYS)
+    efeitografico(LOCALID_DEOXYS, AFFINE, 3)
+    delay (126)
+    removeefeitografico(LOCALID_DEOXYS, AFFINE)
     removeobject(LOCALID_DEOXYS)
     setflag(FLAG_HIDE_DEOXYS)
-    efeitografico(LOCALID_TRIANGLE, AFFINE, 1, 0)
+    efeitografico(LOCALID_TRIANGLE, AFFINE, 1)
     delay (108)
-    efeitografico(LOCALID_TRIANGLE, AFFINE, 1, 1)
+    removeefeitografico(LOCALID_TRIANGLE, AFFINE)
+    removeefeitografico(LOCALID_TRIANGLE, ALPHABLEND)
     removeobject (LOCALID_TRIANGLE)
     setflag (FLAG_HIDE_BIRTH_ISLAND_DEOXYS_TRIANGLE)
-    //setvar (VAR_SAFARI_ZONE_STATE, 1)
+    applymovement (LOCALID_CAMERA, moves(
+        walk_down
+    ))
+    waitmovement (LOCALID_CAMERA)
+    special (RemoveCameraObject)
     release
     end
 }

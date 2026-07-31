@@ -1425,16 +1425,6 @@
 	.byte \speed
 	.endm
 
-	@ Fades the screen to a custom color. Modes are FADE_(TO/FROM)_(WHITE/BLACK/CUSTOM)
-	.macro fadescreencustom mode:req, speed:req, r:req, g:req, b:req
-	.byte SCR_OP_FADESCREENCUSTOM
-	.byte \mode
-	.byte \speed
-	.byte \r
-	.byte \g
-	.byte \b
-	.endm
-
 	@ Sets the flash level. A level of 0 is fully bright, a level of 1 is the largest flash radius, a level
 	@ of 7 is the smallest flash radius, a level of 8 is fully black.
 	.macro setflashlevel level:req
@@ -2920,14 +2910,30 @@
 	.2byte \localId
 	.endm
 
-	@ novo
+
+@ Novos
+	@ Fades the screen to a custom color. Modes are FADE_(TO/FROM)_(WHITE/BLACK/CUSTOM)
+	.macro fadescreencustom mode:req, speed:req, r:req, g:req, b:req
+	.byte SCR_OP_FADESCREENCUSTOM
+	.byte \mode
+	.byte \speed
+	.byte \r
+	.byte \g
+	.byte \b
+	.endm
+
 	@ Inicia animação afim no object definido pelo localid fornecido.
-	.macro efeitografico localId:req, efeito:req, anim:req, terminando:req
-	.byte SCR_OP_EFEITOGRAFICO
+	.macro efeitografico localId:req, efeito:req, anim:req
+	callnative ScrCmd_efeitografico, requests_effects=1
 	.2byte \localId
 	.byte \efeito
 	.byte \anim
-	.byte \terminando
+	.endm
+
+	.macro removeefeitografico localId:req, efeito:req
+	callnative ScrCmd_removeefeitografico, requests_effects=1
+	.2byte \localId
+	.byte \efeito
 	.endm
 
 @ FRLG

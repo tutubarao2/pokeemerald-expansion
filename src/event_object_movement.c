@@ -12250,8 +12250,8 @@ bool8 MovementType_OverworldWildEncounter_Despawn_Step11(struct ObjectEvent *obj
 static const union AffineAnimCmd sAffineAnim_TriangleAppear[] =
 {
     // o sprite precisa iniciar a animação pelo menos com um pixel, caso contrário o quadrado inteiro será preenchido
-    AFFINEANIMCMD_FRAME(4, 4, 0, 0),
-    AFFINEANIMCMD_FRAME(4, 1, 3, 108),
+    AFFINEANIMCMD_FRAME(4, -4, 0, 0),
+    AFFINEANIMCMD_FRAME(4, -1, 3, 108),
     AFFINEANIMCMD_FRAME(0, 0, 3, 60),
     AFFINEANIMCMD_JUMP(2),
 };
@@ -12259,7 +12259,7 @@ static const union AffineAnimCmd sAffineAnim_TriangleAppear[] =
 static const union AffineAnimCmd sAffineAnim_TriangleDisappear[] =
 {
     // quando desaparecendo, é importante não zerar os valores de xScale nem yScale para não gerar bug gráfico
-    AFFINEANIMCMD_FRAME(-4, -1, 3, 108),
+    AFFINEANIMCMD_FRAME(-4, 1, 3, 108),
     AFFINEANIMCMD_END,
 };
 
@@ -12286,45 +12286,50 @@ static const union AffineAnimCmd *const sAffineAnimTable_OW[] = {
     sAffineAnim_DisappearToFloor,
 };
 
-// Obs: Applymovement causa mal funcionamento de animações afins
-void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim, bool8 terminando)
+// Obs: Applymovement só pode ser aplicado quando a animação afim já houver finalizado
+// caso contrário a sprite fica paralisada e não realiza a animação afim
+void AplicaEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito, u8 anim)
 {
     struct Sprite *sprite = &gSprites[objectEvent->spriteId];
 
     switch (efeito)
     {
     case (AFFINE):
-        if (terminando)
-        {
-            sprite->affineAnimPaused = TRUE;
-            FreeSpriteOamMatrix(sprite);
-            sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
-            sprite->affineAnims = gDummySpriteAffineAnimTable;
-        }
+        if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
+            ChangeSpriteAffineAnimIfDifferent(sprite, anim);
         else
         {
-            if (sprite->oam.affineMode != ST_OAM_AFFINE_OFF)
-            {
-                ChangeSpriteAffineAnimIfDifferent(sprite, anim);
-            }
-            else
-            {
-                sprite->affineAnims = sAffineAnimTable_OW;
-                sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
-                InitSpriteAffineAnim(sprite);
-                sprite->subspriteMode = SUBSPRITES_OFF; // isso evita que a posição do sprite seja atualizada quando ele dobra de tamanho
-                sprite->affineAnimPaused = FALSE;
-                ChangeSpriteAffineAnimIfDifferent(sprite, anim); // muda para a animação do número fornecido como argumento
-            }
+            sprite->affineAnims = sAffineAnimTable_OW;
+            sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            InitSpriteAffineAnim(sprite);
+            sprite->subspriteMode = SUBSPRITES_OFF; // isso evita que a posição do sprite seja atualizada quando ele dobra de tamanho
+            sprite->affineAnimPaused = FALSE;
+            ChangeSpriteAffineAnimIfDifferent(sprite, anim); // muda para a animação do número fornecido como argumento
         }
         break;
     case (ALPHABLEND):
-        if (terminando)
-            sprite->oam.objMode = ST_OAM_OBJ_NORMAL;
-        else
-            sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         break;
     }
+}
+
+void RemoveEfeitoGrafico(struct ObjectEvent *objectEvent, u8 efeito)
+{
+    struct Sprite *sprite = &gSprites[objectEvent->spriteId];
+
+    switch (efeito)
+    {
+    case (AFFINE):
+        sprite->affineAnimPaused = TRUE;
+        FreeSpriteOamMatrix(sprite);
+        CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+        sprite->affineAnims = gDummySpriteAffineAnimTable;
+        break;
+    case (ALPHABLEND):
+        sprite->oam.objMode = ST_OAM_OBJ_NORMAL;
+        break;  
+    }    
 }
 
 #undef AFFINE
