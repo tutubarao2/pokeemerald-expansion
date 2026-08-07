@@ -9077,3 +9077,19 @@ DirectSoundWaveData_so_top_jazzbass::
 	.align 2
 DirectSoundWaveData_top_violin::
 	.incbin "sound/direct_sound_samples/top_violin.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_saw::
+	.incbin "sound/direct_sound_samples/so_top_saw.bin"
+
+	.align 2
+DirectSoundWaveData_c4r::
+	.incbin "sound/direct_sound_samples/c4r.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_porgan::
+	.incbin "sound/direct_sound_samples/so_top_porgan.bin"
+
+	.align 2
+DirectSoundWaveData_so_orchestra_hit::
+	.incbin "sound/direct_sound_samples/so_orchestra_hit.bin"
