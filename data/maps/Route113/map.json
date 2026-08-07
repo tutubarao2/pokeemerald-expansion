@@ -2,8 +2,7 @@
   "id": "MAP_ROUTE113",
   "name": "Route113",
   "layout": "LAYOUT_ROUTE113",
-  "music": "MUS_ROUTE113",
-  "region": "REGION_HOENN",
+  "music": "MUS_MEGAMAN_ZX_AREA_A",
   "region_map_section": "MAPSEC_ROUTE_113",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
@@ -462,5 +461,6 @@
       "item": "ITEM_NUGGET",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_113_NUGGET"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

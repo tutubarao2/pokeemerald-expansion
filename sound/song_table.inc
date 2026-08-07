@@ -617,6 +617,7 @@ gSongTable::
 	song ph_nurse_held, MUSIC_PLAYER_SE2, 2
 	song ph_nurse_solo, MUSIC_PLAYER_SE2, 2
 	song take_up_the_cross, MUSIC_PLAYER_BGM, 0
+	song mus_megaman_zx_area_a, MUSIC_PLAYER_BGM, 0
 
 	.align 2
 dummy_song_header:

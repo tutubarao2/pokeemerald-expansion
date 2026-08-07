@@ -202,3 +202,4 @@
 .include "sound/voicegroups/rg_sevii_67.inc"
 .include "sound/voicegroups/drumsets/rg_credits.inc"
 .include "sound/voicegroups/take_up_the_cross.inc"
+.include "sound/voicegroups/mus_megaman_zx_area_a.inc"
