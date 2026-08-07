@@ -9041,3 +9041,39 @@ DirectSoundWaveData_sd90_classical_whistle::
 	.align 2
 DirectSoundWaveData_sd90_enhanced_delay_shaku::
 	.incbin "sound/direct_sound_samples/sd90_enhanced_delay_shaku.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_flute::
+	.incbin "sound/direct_sound_samples/so_top_flute.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_shaker::
+	.incbin "sound/direct_sound_samples/so_top_shaker.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_acstc_gtr::
+	.incbin "sound/direct_sound_samples/so_top_acstc_gtr.bin"
+
+	.align 2
+DirectSoundWaveData_str::
+	.incbin "sound/direct_sound_samples/str.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_strings::
+	.incbin "sound/direct_sound_samples/so_top_strings.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_bass::
+	.incbin "sound/direct_sound_samples/so_top_bass.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_pizzicato::
+	.incbin "sound/direct_sound_samples/so_top_pizzicato.bin"
+
+	.align 2
+DirectSoundWaveData_so_top_jazzbass::
+	.incbin "sound/direct_sound_samples/so_top_jazzbass.bin"
+
+	.align 2
+DirectSoundWaveData_top_violin::
+	.incbin "sound/direct_sound_samples/top_violin.bin"
